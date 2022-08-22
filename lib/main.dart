@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'KbcGame.dart';
+import 'FruitShop.dart';
+import 'homepage.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: KbcGame(),
+      routes: {
+        '/': (context) => const homepage(),
+        'FruitShop': (context) => const FruitShop(),
+      },
     ),
   );
 }
