@@ -4,380 +4,383 @@ void main() {
   runApp(
     const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyCal(),
+      home: Gst(),
     ),
   );
 }
 
-class MyCal extends StatefulWidget {
-  const MyCal({Key? key}) : super(key: key);
+class Gst extends StatefulWidget {
+  const Gst({Key? key}) : super(key: key);
   @override
-  State<MyCal> createState() => _MyCalState();
+  State<Gst> createState() => _GstState();
 }
 
-class _MyCalState extends State<MyCal> {
-  var MyStyle = const TextStyle(
-    fontSize: 35,
-    color: Colors.white,
-  );
-  var MyStyle2 = const TextStyle(
-    fontSize: 35,
-    color: Color(0xffff5a66),
-  );
-  var m1 = [7, 8, 9, "*"];
-  var m2 = [4, 5, 6, "-"];
-  var m3 = [1, 2, 3, "+"];
-  var m4 = ["00", 0, ".", "="];
+class _GstState extends State<Gst> {
+  var Box1 = 0;
+  var Box2 = 0;
+  var Box3 = 0;
+  var Box4 = 0;
+  var Box5 = 0;
+  var Val = 0;
+  var prs = 0;
+  var GST = 0;
+  var MyStyle = const TextStyle(fontSize: 30);
   var input = 0;
-  var input2 = 0;
-  var opp = "0";
-  var total = 0;
-  var out = 0;
-  var stop = 0;
+  var finalPrice = 0;
+  var m1 = [7, 4, 1, "00"];
+  var m2 = [8, 5, 2, 0];
+  var m3 = [9, 6, 3, "."];
+  var pr = ["3%", "5%", "12%", "18%", "28%"];
+  var Decor = BoxDecoration(
+    color: Colors.deepOrange,
+    borderRadius: BorderRadius.circular(10),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: double.infinity,
         child: Column(
           children: [
             Expanded(
-              flex: 1,
-              child: Container(
-                color: const Color(0xff2e2d32),
-                width: double.infinity,
-                height: double.infinity,
-                alignment: Alignment.bottomRight,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      (opp == "0")
-                          ? "$input"
-                          : (input2 == 0)
-                              ? "$input $opp"
-                              : "$input $opp $input2",
-                      style: const TextStyle(
-                        fontSize: 40,
-                        color: Color(0xff8d8d8d),
-                      ),
+              flex: 45,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    height: 35,
+                    width: 400,
+                    color: Colors.grey.shade300,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "ORIGINAL PRICE",
+                          style: TextStyle(fontSize: 19),
+                        ),
+                        const SizedBox(width: 25),
+                        Container(
+                          width: 200,
+                          alignment: Alignment.center,
+                          child: Text(
+                            "$input Rs.",
+                            style: const TextStyle(fontSize: 19),
+                          ),
+                        ),
+                      ],
                     ),
-                    (out == 1)
-                        ? Text(
-                            "$total",
-                            style: const TextStyle(
-                              fontSize: 60,
-                              color: Color(0xffffffff),
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    height: 80,
+                    width: 400,
+                    color: Colors.grey.shade300,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            SizedBox(height: 40),
+                            Text(
+                              "GST",
+                              style: TextStyle(fontSize: 21),
                             ),
-                          )
-                        : const Text(""),
-                  ],
-                ),
+                            SizedBox(height: 30),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: pr.map((e) {
+                            return InkWell(
+// splashColor: Colors.deepOrange,
+                              onTap: () {
+                                setState(() {
+                                  if (e == "3%") {
+                                    prs = 3;
+                                    finalPrice = (input * 3 ~/ 100) + input;
+                                    GST = (finalPrice - input) ~/ 2;
+                                    Box1 = 1;
+                                    Box2 = 0;
+                                    Box3 = 0;
+                                    Box4 = 0;
+                                    Box5 = 0;
+                                  } else if (e == "5%") {
+                                    finalPrice = (input * 5 ~/ 100) + input;
+                                    GST = (finalPrice - input) ~/ 2;
+                                    prs = 5;
+                                    Box2 = 1;
+                                    Box1 = 0;
+                                    Box3 = 0;
+                                    Box4 = 0;
+                                    Box5 = 0;
+                                  } else if (e == "12%") {
+                                    finalPrice = (input * 12 ~/ 100) + input;
+                                    GST = (finalPrice - input) ~/ 2;
+                                    prs = 12;
+                                    Box3 = 1;
+                                    Box1 = 0;
+                                    Box2 = 0;
+                                    Box4 = 0;
+                                    Box5 = 0;
+                                  } else if (e == "18%") {
+                                    finalPrice = (input * 18 ~/ 100) + input;
+                                    GST = (finalPrice - input) ~/ 2;
+                                    prs = 18;
+                                    Box4 = 1;
+                                    Box1 = 0;
+                                    Box2 = 0;
+                                    Box3 = 0;
+                                    Box5 = 0;
+                                  } else if (e == "28%") {
+                                    finalPrice = (input * 28 ~/ 100) + input;
+                                    GST = (finalPrice - input) ~/ 2;
+                                    prs = 28;
+                                    Box5 = 1;
+                                    Box1 = 0;
+                                    Box2 = 0;
+                                    Box3 = 0;
+                                    Box4 = 0;
+                                  }
+                                });
+                              },
+                              child: Ink(
+                                child: Container(
+                                  width: 75,
+                                  height: 35,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    e,
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  decoration: (e == "3%" && Box1 == 1)
+                                      ? Decor
+                                      : (e == "5%" && Box2 == 1)
+                                          ? Decor
+                                          : (e == "12%" && Box3 == 1)
+                                              ? Decor
+                                              : (e == "18%" && Box4 == 1)
+                                                  ? Decor
+                                                  : (e == "28%" && Box5 == 1)
+                                                      ? Decor
+                                                      : BoxDecoration(),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    height: 35,
+                    width: 400,
+                    color: Colors.grey.shade300,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "FINAL PRICE",
+                          style: TextStyle(fontSize: 19),
+                        ),
+                        const SizedBox(width: 90),
+                        Text(
+                          "$finalPrice",
+                          style: const TextStyle(fontSize: 19),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    height: 80,
+                    width: 270,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "CGST/SGST",
+                          style: TextStyle(
+                            fontSize: 21,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 9),
+                        Text(
+                          "$GST",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                ],
               ),
             ),
             Expanded(
-              flex: 2,
-              child: Container(
-                color: const Color(0xff2e2d32),
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              input = 0;
-                              input2 = 0;
-                              opp = "0";
-                              out = 0;
-                              stop = 0;
-                            });
-                          },
-                          child: Ink(
-                            child: Container(
-                              height: 65,
-                              width: 170,
-                              alignment: Alignment.center,
-                              child: const Text(
-                                "AC",
-                                style: TextStyle(
-                                  fontSize: 35,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: const Color(0xffff5a66),
-                              ),
+              flex: 55,
+              child: Row(
+                children: [
+                  Column(
+                    children: m1.map((e) {
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (e == 7) {
+                              input = (input * 10) + 7;
+                            } else if (e == 4) {
+                              input = (input * 10) + 4;
+                            } else if (e == 1) {
+                              input = (input * 10) + 1;
+                            } else if (e == "00") {
+                              input = input * 100;
+                            }
+                          });
+                        },
+                        child: Ink(
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 85,
+                            height: 105,
+                            color: Colors.white,
+                            child: Text(
+                              "$e",
+                              style: MyStyle,
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              opp = "%";
-                            });
-                          },
-                          child: Ink(
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              alignment: Alignment.center,
-                              child: const Text(
-                                "%",
-                                style: TextStyle(
-                                  fontSize: 35,
-                                  color: Color(0xff929292),
-                                ),
-                              ),
+                      );
+                    }).toList(),
+                  ),
+                  Column(
+                    children: m2.map((e) {
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (e == 8) {
+                              input = (input * 10) + 8;
+                            } else if (e == 5) {
+                              input = (input * 10) + 5;
+                            } else if (e == 2) {
+                              input = (input * 10) + 2;
+                            } else if (e == 0) {
+                              input = input * 10;
+                            }
+                          });
+                        },
+                        child: Ink(
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 100,
+                            height: 105,
+                            color: Colors.white,
+                            child: Text(
+                              "$e",
+                              style: MyStyle,
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              opp = "/";
-                            });
-                          },
-                          child: Ink(
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              alignment: Alignment.center,
-                              child: Text(
-                                "/",
-                                style: MyStyle2,
-                              ),
+                      );
+                    }).toList(),
+                  ),
+                  Column(
+                    children: m3.map((e) {
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (e == 9) {
+                              input = (input * 10) + 9;
+                            } else if (e == 6) {
+                              input = (input * 10) + 6;
+                            } else if (e == 3) {
+                              input = (input * 10) + 3;
+                            }
+                          });
+                        },
+                        child: Ink(
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 100,
+                            height: 105,
+                            color: Colors.white,
+                            child: Text(
+                              "$e",
+                              style: MyStyle,
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: m1.map((e) {
-                            return InkWell(
-                              onTap: () {
-                                setState(() {
-                                  if (e == "*") {
-                                    opp = "*";
-                                  } else if (opp == "0") {
-                                    if (e == 9) {
-                                      input = (input * 10) + 9;
-                                    } else if (e == 8) {
-                                      input = (input * 10) + 8;
-                                    } else if (e == 7) {
-                                      input = (input * 10) + 7;
-                                    }
-                                  } else if (opp == "+" ||
-                                      opp == "-" ||
-                                      opp == "*" ||
-                                      opp == "/" ||
-                                      opp == "%") {
-                                    if (e == 9 && stop == 0) {
-                                      input2 = (input2 * 10) + 9;
-                                    } else if (e == 8 && stop == 0) {
-                                      input2 = (input2 * 10) + 8;
-                                    } else if (e == 7 && stop == 0) {
-                                      input2 = (input2 * 10) + 7;
-                                    }
-                                  }
-                                });
-                              },
-                              child: Ink(
-                                child: Container(
-                                  height: 100,
-                                  width: 90,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "$e",
-                                    style: (e == "*") ? MyStyle2 : MyStyle,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }).toList(),
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: m2.map((e) {
-                            return InkWell(
-                              onTap: () {
-                                setState(() {
-                                  if (e == "-") {
-                                    opp = "-";
-                                  } else if (opp == "0") {
-                                    if (e == 6) {
-                                      input = (input * 10) + 6;
-                                    } else if (e == 5) {
-                                      input = (input * 10) + 5;
-                                    } else if (e == 4) {
-                                      input = (input * 10) + 4;
-                                    }
-                                  } else if (opp == "+" ||
-                                      opp == "-" ||
-                                      opp == "*" ||
-                                      opp == "/" ||
-                                      opp == "%") {
-                                    if (e == 6 && stop == 0) {
-                                      input2 = (input2 * 10) + 6;
-                                    } else if (e == 5 && stop == 0) {
-                                      input2 = (input2 * 10) + 5;
-                                    } else if (e == 4 && stop == 0) {
-                                      input2 = (input2 * 10) + 4;
-                                    }
-                                  }
-                                });
-                              },
-                              child: Ink(
-                                child: Container(
-                                  height: 100,
-                                  width: 90,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "$e",
-                                    style: (e == "-") ? MyStyle2 : MyStyle,
-                                  ),
-                                ),
+                      );
+                    }).toList(),
+                  ),
+                  Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            finalPrice = 0;
+                            GST = 0;
+                            input = 0;
+                            prs = 0;
+                            Box1 = 0;
+                            Box2 = 0;
+                            Box3 = 0;
+                            Box4 = 0;
+                            Box5 = 0;
+                          });
+                        },
+                        child: Ink(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: const Text(
+                              "AC",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
                               ),
-                            );
-                          }).toList(),
+                            ),
+                            height: 200,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.deepOrange,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: m3.map((e) {
-                            return InkWell(
-                              onTap: () {
-                                setState(() {
-                                  if (e == "+") {
-                                    opp = "+";
-                                  } else if (opp == "0") {
-                                    if (e == 3) {
-                                      input = (input * 10) + 3;
-                                    } else if (e == 2) {
-                                      input = (input * 10) + 2;
-                                    } else if (e == 1) {
-                                      input = (input * 10) + 1;
-                                    }
-                                  } else if (opp == "+" ||
-                                      opp == "-" ||
-                                      opp == "*" ||
-                                      opp == "/" ||
-                                      opp == "%") {
-                                    if (e == 3 && stop == 0) {
-                                      input2 = (input2 * 10) + 3;
-                                    } else if (e == 2 && stop == 0) {
-                                      input2 = (input2 * 10) + 2;
-                                    } else if (e == 1 && stop == 0) {
-                                      input2 = (input2 * 10) + 1;
-                                    }
-                                  }
-                                });
-                              },
-                              child: Ink(
-                                child: Container(
-                                  height: 100,
-                                  width: 90,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "$e",
-                                    style: (e == "+") ? MyStyle2 : MyStyle,
-                                  ),
-                                ),
+                      ),
+                      const SizedBox(height: 15),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            input = input ~/ 10;
+                          });
+                        },
+                        child: Ink(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: const Text(
+                              "⌫",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
                               ),
-                            );
-                          }).toList(),
+                            ),
+                            height: 200,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.deepOrange,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: m4.map((e) {
-                            return InkWell(
-                              onTap: () {
-                                setState(() {
-                                  if (opp == "0") {
-                                    if (e == "00") {
-                                      input = input * 100;
-                                    } else if (e == 0) {
-                                      input = input * 10;
-                                    }
-                                  } else if (opp == "+" ||
-                                      opp == "-" ||
-                                      opp == "*" ||
-                                      opp == "/" ||
-                                      opp == "%") {
-                                    if (e == "00" && stop == 0) {
-                                      input2 = input2 * 100;
-                                    } else if (e == 0 && stop == 0) {
-                                      input2 = input2 * 10;
-                                    }
-                                  }
-                                  if (e == "=") {
-                                    stop = 1;
-                                    out = 1;
-                                    if (opp == "%") {
-                                      total = input % input2;
-                                    } else if (opp == "/") {
-                                      total = input ~/ input2;
-                                    } else if (opp == "*") {
-                                      total = input * input2;
-                                    } else if (opp == "-") {
-                                      total = input - input2;
-                                    } else if (opp == "+") {
-                                      total = input + input2;
-                                    }
-                                  }
-                                });
-                              },
-                              child: Ink(
-                                child: Container(
-                                  height: (e == "=") ? 80 : 100,
-                                  width: (e == "=") ? 80 : 100,
-                                  alignment: Alignment.center,
-                                  decoration: (e == "=")
-                                      ? const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Color(0xffff5a66),
-                                        )
-                                      : const BoxDecoration(),
-                                  child: Text(
-                                    "$e",
-                                    style: (e == "=")
-                                        ? const TextStyle(
-                                            fontSize: 40,
-                                            color: Colors.white,
-                                          )
-                                        : MyStyle,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
